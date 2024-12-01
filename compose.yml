@@ -13,6 +13,21 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock
         - ./docker/portainer:/data
 
+  ftpd:
+    container_name: www_ftpd
+    restart: unless-stopped
+    image: stilliard/pure-ftpd
+    ports:
+        - "9021:21"
+        - "30000-30009:30000-30009"
+    environment:
+      FTP_USER_NAME: ftpuser
+      FTP_USER_PASS: ${DB_PASS}
+      FTP_USER_HOME: /www
+      PUBLICHOST: localhost
+    volumes:
+      - ./volumes/www/:/www
+          
   nginx:
     image: nginx:stable
     restart: unless-stopped
@@ -62,6 +77,7 @@ services:
     container_name: www_travel
     volumes:
       - ./volumes/www_travel:/var/www/html/wp-content
+      - ./volumes/www_travel/php:/usr/local/etc/php
     environment:
       - WORDPRESS_DB_NAME=travel_db
       - WORDPRESS_TABLE_PREFIX=wp_
