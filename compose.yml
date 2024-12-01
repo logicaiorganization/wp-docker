@@ -76,7 +76,7 @@ services:
     restart: unless-stopped
     container_name: www_travel
     volumes:
-      - ./volumes/www/www_travel:/var/www/html/wp-content
+      - ./volumes/www/www_travel:/var/www/html
       - ./volumes/www/www_travel/php:/usr/local/etc/php
     environment:
       - WORDPRESS_DB_NAME=travel_db
