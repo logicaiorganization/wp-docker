@@ -1,6 +1,18 @@
 version: "3.6"
 services:
 
+  portainer:
+    container_name: www_portainer
+    restart: unless-stopped
+    image: portainer/portainer-ce:latest
+    ports:
+        #- "8100:8000"
+        #- "7436:9000"
+        # - "7436:9443"      
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./docker/portainer:/data
+
   nginx:
     image: nginx:stable
     restart: unless-stopped
